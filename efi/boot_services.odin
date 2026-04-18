@@ -125,11 +125,11 @@ Locate_Protocol :: #type proc "std" (
 	registration: rawptr,
 	interface: ^rawptr,
 ) -> Status
-Install_Multiple_Procol_Interfaces :: #type proc "std" (
+Install_Multiple_Protocol_Interfaces :: #type proc "std" (
 	handle: ^Handle,
 	#c_vararg interfaces: ..any,
 ) -> Status
-Uninstall_Multiple_Procol_Interfaces :: #type proc "std" (
+Uninstall_Multiple_Protocol_Interfaces :: #type proc "std" (
 	handle: Handle,
 	#c_vararg interfaces: ..any,
 ) -> Status
