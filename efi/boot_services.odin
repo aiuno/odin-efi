@@ -219,8 +219,8 @@ Boot_Services :: struct {
 	protocols_per_handle:                   Protocols_Per_Handle,
 	locate_handle_buffer:                   Locate_Handle_Buffer,
 	locate_protocol:                        Locate_Protocol,
-	install_multiple_protocol_interfaces:   Install_Multiple_Procol_Interfaces,
-	uninstall_multiple_protocol_interfaces: Uninstall_Multiple_Procol_Interfaces,
+	install_multiple_protocol_interfaces:   Install_Multiple_Protocol_Interfaces,
+	uninstall_multiple_protocol_interfaces: Uninstall_Multiple_Protocol_Interfaces,
 	// 32-bit CRC services
 	calculate_crc32:                        Calculate_Crc32,
 	// Misc services
