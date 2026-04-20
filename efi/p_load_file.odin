@@ -19,5 +19,12 @@ Load_File_Protocol :: struct {
 	load_file: Load_File,
 }
 
-// The only difference is in the return status of load_file()
+LOAD_FILE2_PROTOCOL_GUID :: Guid {
+	0x4006c0c1,
+	0xfcb3,
+	0x403e,
+	{0x99, 0x6d, 0x4a, 0x6c, 0x87, 0x24, 0xe0, 0x6d},
+}
+
+// The only difference is in the returned status of load_file()
 Load_File2_Protocol :: distinct Load_File_Protocol
