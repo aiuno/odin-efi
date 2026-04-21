@@ -1,164 +1,225 @@
 package efi
 
 Create_Event :: #type proc "std" (
-	type: u32,
-	notify_tpl: TPL,
-	notify_proc: Event_Notify,
-	notify_ctx: rawptr,
-	event: ^Event,
+	type: u32, // In
+	notify_tpl: TPL, // In
+	notify_proc: Event_Notify, // In
+	notify_ctx: rawptr, // In
+	event: ^Event, // Out
 ) -> Status
-Event_Notify :: #type proc "std" (event: Event, ctx: rawptr)
+Event_Notify :: #type proc "std" (
+	event: Event, // In
+	ctx: rawptr, // In
+)
 Create_Event_Ex :: #type proc "std" (
-	type: u32,
-	notify_tpl: TPL,
-	notify_proc: Event_Notify,
-	notify_ctx: rawptr,
-	event_group: Guid,
-	event: ^Event,
+	type: u32, // In
+	notify_tpl: TPL, // In
+	notify_proc: Event_Notify, // In
+	notify_ctx: rawptr, // In
+	event_group: Guid, // In
+	event: ^Event, // Out
 ) -> Status
-Close_Event :: #type proc "std" (event: Event) -> Status
-Signal_Event :: #type proc "std" (event: Event) -> Status
-Wait_For_Event :: #type proc "std" (number_of_events: uint, event: ^Event, index: ^uint) -> Status
-Check_Event :: #type proc "std" (event: Event) -> Status
-Set_Timer :: #type proc "std" (event: Event, type: Timer_Delay, tigger_time: u64) -> Status
-Raise_TPL :: #type proc "std" (new_tpl: TPL) -> TPL
-Restore_TPL :: #type proc "std" (old_tpl: TPL)
+Close_Event :: #type proc "std" (
+	event: Event, // In
+) -> Status
+Signal_Event :: #type proc "std" (
+	event: Event, // In
+) -> Status
+Wait_For_Event :: #type proc "std" (
+	number_of_events: uint, // In
+	event: ^Event, // In
+	index: ^uint, // Out
+) -> Status
+Check_Event :: #type proc "std" (
+	event: Event, // In
+) -> Status
+Set_Timer :: #type proc "std" (
+	event: Event, // In
+	type: Timer_Delay, // In
+	tigger_time: u64, // In
+) -> Status
+Raise_TPL :: #type proc "std" (
+	new_tpl: TPL, // In
+) -> TPL
+Restore_TPL :: #type proc "std" (
+	old_tpl: TPL, // In
+)
 Allocate_Pages :: #type proc "std" (
-	type: Allocate_Type,
-	memory_type: Memory_Type,
-	pages: uint,
-	memory: ^Physical_Address,
+	type: Allocate_Type, // In
+	memory_type: Memory_Type, // In
+	pages: uint, // In
+	memory: ^Physical_Address, // In
 ) -> Status
-Free_Pages :: #type proc "std" (memory: Physical_Address, pages: uint) -> Status
+Free_Pages :: #type proc "std" (
+	memory: Physical_Address, // In
+	pages: uint, // In
+) -> Status
 Get_Memory_Map :: #type proc "std" (
-	memory_map_size: ^uint,
-	memory_map: ^Memory_Descriptor,
-	map_key, descriptor_size: ^uint,
-	descriptor_version: ^u32,
+	memory_map_size: ^uint, // In Out
+	memory_map: ^Memory_Descriptor, // Out
+	map_key, descriptor_size: ^uint, // Out
+	descriptor_version: ^u32, // Out
 ) -> Status
-Allocate_Pool :: #type proc "std" (pool_type: Memory_Type, size: uint, buffer: ^rawptr) -> Status
-Free_Pool :: #type proc "std" (buffer: rawptr) -> Status
+Allocate_Pool :: #type proc "std" (
+	pool_type: Memory_Type, // In
+	size: uint, // In
+	buffer: ^rawptr, // Out
+) -> Status
+Free_Pool :: #type proc "std" (
+	buffer: rawptr, // In
+) -> Status
 Install_Protocol_Interface :: #type proc "std" (
-	handle: ^Handle,
-	protocol: ^Guid,
-	interface_type: Interface_Type,
-	interface: rawptr,
+	handle: ^Handle, // In
+	protocol: ^Guid, // In
+	interface_type: Interface_Type, // In
+	interface: rawptr, // In
 ) -> Status
 Uninstall_Protocol_Interface :: #type proc "std" (
-	handle: Handle,
-	protocol: ^Guid,
-	interface: rawptr,
+	handle: Handle, // In
+	protocol: ^Guid, // In
+	interface: rawptr, // In
 ) -> Status
 Reinstall_Protocol_Interface :: #type proc "std" (
-	handle: ^Handle,
-	protocol: ^Guid,
-	old_interface: rawptr,
-	new_interface: rawptr,
+	handle: ^Handle, // In
+	protocol: ^Guid, // In
+	old_interface: rawptr, // In
+	new_interface: rawptr, // In
 ) -> Status
 Register_Protocol_Notify :: #type proc "std" (
-	protocol: ^Guid,
-	event: Event,
-	registration: ^rawptr,
+	protocol: ^Guid, // In
+	event: Event, // In
+	registration: ^rawptr, // Out
 ) -> Status
 Locate_Handle :: #type proc "std" (
-	search_type: Locate_Search_Type,
-	protocol: ^Guid,
-	buffer_size: ^uint,
-	buffer: ^Handle,
+	search_type: Locate_Search_Type, // In
+	protocol: ^Guid, // In Optional
+	search_key: rawptr, // In Optional
+	buffer_size: ^uint, // In Out
+	buffer: ^Handle, // Out
 ) -> Status
-Handle_Protocol :: #type proc "std" (handle: Handle, protocol: ^Guid, interface: ^rawptr) -> Status
+Handle_Protocol :: #type proc "std" (
+	handle: Handle, // In
+	protocol: ^Guid, // In
+	interface: ^rawptr, // Out
+) -> Status
 Locate_Device_Path :: #type proc "std" (
-	protocol: ^Guid,
-	device_path: ^^Device_Path_Protocol,
-	device: ^Handle,
+	protocol: ^Guid, // In
+	device_path: ^^Device_Path_Protocol, // In
+	device: ^Handle, // Out
 ) -> Status
 Open_Protocol :: #type proc "std" (
-	handle: Handle,
-	protocol: ^Guid,
-	interface: ^rawptr,
-	agent_handle: Handle,
-	controller_handle: Handle,
-	attributes: Open_Protocol_Attributes,
+	handle: Handle, // In
+	protocol: ^Guid, // In
+	interface: ^rawptr, // Out Optional
+	agent_handle: Handle, // In
+	controller_handle: Handle, // In
+	attributes: Open_Protocol_Attributes, // In
 ) -> Status
 Close_Protocol :: #type proc "std" (
-	handle: Handle,
-	protocol: ^Guid,
-	agent_handle: Handle,
-	controller_handle: Handle,
+	handle: Handle, // In
+	protocol: ^Guid, // In
+	agent_handle: Handle, // In
+	controller_handle: Handle, // In
 ) -> Status
 Open_Protocol_Information :: #type proc "std" (
-	handle: Handle,
-	protocol: ^Guid,
-	entry_buffer: ^[^]Open_Protocol_Information_Entry,
-	entry_count: uint,
+	handle: Handle, // In
+	protocol: ^Guid, // In
+	entry_buffer: ^[^]Open_Protocol_Information_Entry, // Out
+	entry_count: uint, // Out
 ) -> Status
 Connect_Controller :: #type proc "std" (
-	controller_handle: Handle,
-	driver_image_handle: ^Handle,
-	remaining_device_path: ^Device_Path_Protocol,
-	recursive: bool,
+	controller_handle: Handle, // In
+	driver_image_handle: ^Handle, // In Optional
+	remaining_device_path: ^Device_Path_Protocol, // In Optional
+	recursive: bool, // In
 ) -> Status
 Disconnect_Controller :: #type proc "std" (
-	controller_handle, driver_image_handle, child_handle: Handle,
+	controller_handle: Handle, // In
+	driver_image_handle: Handle, // In Optional
+	child_handle: Handle, // In Optional
 ) -> Status
 Protocols_Per_Handle :: #type proc "std" (
-	handle: Handle,
-	protocol_buffer: ^^[^]Guid,
-	protocol_buffer_count: ^uint,
+	handle: Handle, // In
+	protocol_buffer: ^^[^]Guid, // Out
+	protocol_buffer_count: ^uint, // Out
 ) -> Status
 Locate_Handle_Buffer :: #type proc "std" (
 	search_type: Locate_Search_Type,
-	procotol: ^Guid,
-	search_key: rawptr,
-	no_handles: ^uint,
-	buffer: ^[^]Handle,
+	procotol: ^Guid, // In Optional
+	search_key: rawptr, // In Optional
+	no_handles: ^uint, // Out
+	buffer: ^[^]Handle, // Out
 ) -> Status
 Locate_Protocol :: #type proc "std" (
-	protocol: ^Guid,
-	registration: rawptr,
-	interface: ^rawptr,
+	protocol: ^Guid, // In
+	registration: rawptr, // In Optional
+	interface: ^rawptr, // Out
 ) -> Status
 Install_Multiple_Protocol_Interfaces :: #type proc "std" (
-	handle: ^Handle,
+	handle: ^Handle, // In Out
 	#c_vararg interfaces: ..any,
 ) -> Status
 Uninstall_Multiple_Protocol_Interfaces :: #type proc "std" (
-	handle: Handle,
+	handle: Handle, // In
 	#c_vararg interfaces: ..any,
 ) -> Status
 Load_Image :: #type proc "std" (
-	boot_policy: bool,
-	parent_image_handle: Handle,
-	device_path: ^Device_Path_Protocol,
-	source_buffer: rawptr,
-	source_size: uint,
-	image_handle: ^Handle,
+	boot_policy: bool, // In
+	parent_image_handle: Handle, // In
+	device_path: ^Device_Path_Protocol, // In Optional
+	source_buffer: rawptr, // In Optional
+	source_size: uint, // In
+	image_handle: ^Handle, // Out
 ) -> Status
 Start_Image :: #type proc "std" (
-	image_handle: Handle,
-	exit_data_size: ^uint,
-	exit_data: ^cstring16,
+	image_handle: Handle, // In
+	exit_data_size: ^uint, // Out
+	exit_data: ^cstring16, // Out Optional
 ) -> Status
-Unload_Image :: #type proc "std" (image_handle: Handle) -> Status
+Unload_Image :: #type proc "std" (
+	image_handle: Handle, // In
+) -> Status
 Exit :: #type proc "std" (
-	image_handle: Handle,
-	exit_status: Status,
-	exit_data_size: uint,
-	exit_data: cstring16,
+	image_handle: Handle, // In
+	exit_status: Status, // In
+	exit_data_size: uint, // In
+	exit_data: cstring16, // In Optional
 ) -> Status
-Exit_Boot_Services :: #type proc "std" (image_handle: Handle, map_key: uint) -> Status
+Exit_Boot_Services :: #type proc "std" (
+	image_handle: Handle, // In
+	map_key: uint, // In
+) -> Status
 Set_Watchdog_Timer :: #type proc "std" (
-	timeout: uint,
-	watchdog_code: u64,
-	data_size: uint,
-	watchdog_data: cstring16,
+	timeout: uint, // In
+	watchdog_code: u64, // In
+	data_size: uint, // In
+	watchdog_data: cstring16, // In Optional
 ) -> Status
-Stall :: #type proc "std" (microseconds: uint) -> Status
-Copy_Mem :: #type proc "std" (destination, source: rawptr, length: uint)
-Set_Mem :: #type proc "std" (buffer: rawptr, size: uint, value: u8)
-Get_Next_Monotonic_Count :: #type proc "std" (count: ^u64) -> Status
-Install_Configuration_Table :: #type proc "std" (guid: ^Guid, table: rawptr) -> Status
-Calculate_Crc32 :: #type proc "std" (data: rawptr, data_size: uint, crc32: u32) -> Status
+Stall :: #type proc "std" (
+	microseconds: uint, // In
+) -> Status
+Copy_Mem :: #type proc "std" (
+	destination: rawptr, // In
+	source: rawptr, // In
+	length: uint, // In
+)
+Set_Mem :: #type proc "std" (
+	buffer: rawptr, // In
+	size: uint, // In
+	value: u8, // In
+)
+Get_Next_Monotonic_Count :: #type proc "std" (
+	count: ^u64, // Out
+) -> Status
+Install_Configuration_Table :: #type proc "std" (
+	guid: ^Guid, // In
+	table: rawptr, // In
+) -> Status
+Calculate_Crc32 :: #type proc "std" (
+	data: rawptr, // In
+	data_size: uint, // In
+	crc32: ^u32, // Out
+) -> Status
 
 Open_Protocol_Attribute :: enum u32 {
 	By_Handle,
