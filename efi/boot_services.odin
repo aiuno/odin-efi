@@ -1,12 +1,5 @@
 package efi
 
-OPEN_PROTOCOL_BY_HANDLE_PROTOCOL :: 0x00000001
-OPEN_PROTOCOL_GET_PROTOCOL :: 0x00000002
-OPEN_PROTOCOL_TEST_PROTOCOL :: 0x00000004
-OPEN_PROTOCOL_BY_CHILD_CONTROLLER :: 0x00000008
-OPEN_PROTOCOL_BY_DRIVER :: 0x00000010
-OPEN_PROTOCOL_EXCLUSIVE :: 0x00000020
-
 Create_Event :: #type proc "std" (
 	type: u32,
 	notify_tpl: TPL,
@@ -85,7 +78,7 @@ Open_Protocol :: #type proc "std" (
 	interface: ^rawptr,
 	agent_handle: Handle,
 	controller_handle: Handle,
-	attributes: u32,
+	attributes: Open_Protocol_Attributes,
 ) -> Status
 Close_Protocol :: #type proc "std" (
 	handle: Handle,
@@ -166,6 +159,17 @@ Set_Mem :: #type proc "std" (buffer: rawptr, size: uint, value: u8)
 Get_Next_Monotonic_Count :: #type proc "std" (count: ^u64) -> Status
 Install_Configuration_Table :: #type proc "std" (guid: ^Guid, table: rawptr) -> Status
 Calculate_Crc32 :: #type proc "std" (data: rawptr, data_size: uint, crc32: u32) -> Status
+
+Open_Protocol_Attribute :: enum u32 {
+	By_Handle,
+	Get,
+	Test,
+	By_Child_Controller,
+	By_Driver,
+	Exclusive,
+}
+
+Open_Protocol_Attributes :: bit_set[Open_Protocol_Attribute;u32]
 
 BOOT_SERVICES_SIGNATURE :: 0x56524553544f4f42
 BOOT_SERVICES_REVISION :: SPECIFICATION_VERSION

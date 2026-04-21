@@ -44,7 +44,7 @@ init :: proc "contextless" (image: Handle, systab: ^System_Table) -> Status {
 		cast(^rawptr)&shp,
 		image,
 		nil,
-		OPEN_PROTOCOL_GET_PROTOCOL,
+		{.Get},
 	)
 	if !is_error(status) && shp != nil {
 		args = shp.argv[:shp.argc]
@@ -58,7 +58,7 @@ init :: proc "contextless" (image: Handle, systab: ^System_Table) -> Status {
 			cast(^rawptr)&shi,
 			image,
 			nil,
-			OPEN_PROTOCOL_GET_PROTOCOL,
+			{.Get},
 		)
 		if !is_error(status) && shi != nil {
 			args = shi.argv[:shi.argc]

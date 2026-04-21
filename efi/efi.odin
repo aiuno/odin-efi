@@ -122,20 +122,20 @@ EVT_NOTIFY_SIGNAL :: 0x00000200
 EVT_SIGNAL_EXIT_BOOT_SERVICES :: 0x00000201
 EVT_SIGNAL_VIRTUAL_ADDRESS_CHANGE :: 0x00000202
 
-Timer_Delay :: enum i32 {
+Timer_Delay :: enum uint {
 	Cancel,
 	Periodic,
 	Relative,
 }
 
-Allocate_Type :: enum i32 {
+Allocate_Type :: enum uint {
 	Any_Pages,
 	Max_Address,
 	Address,
 	Max,
 }
 
-Memory_Type :: enum i32 {
+Memory_Type :: enum uint {
 	Reserved,
 	Loader_Code,
 	Loader_Data,
@@ -184,11 +184,11 @@ Memory_Descriptor :: struct {
 	attribute:       u64,
 }
 
-Interface_Type :: enum i32 {
+Interface_Type :: enum uint {
 	Native,
 }
 
-Locate_Search_Type :: enum i32 {
+Locate_Search_Type :: enum uint {
 	All_Handles,
 	By_Register_Notify,
 	By_Protocol,
@@ -236,14 +236,18 @@ Win_Certificate_Uefi_Guid :: struct {
 	cert_data: [^]u8,
 }
 
-VARIABLE_NON_VOLATILE :: 0x00000001
-VARIABLE_BOOTSERVICE_ACCESS :: 0x00000002
-VARIABLE_RUNTIME_ACCESS :: 0x00000004
-VARIABLE_HARDWARE_ERROR_RECORD :: 0x00000008
-VARIABLE_HR :: 0x00000010
-VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS :: 0x00000020
-VARIABLE_APPEND_WRITE :: 0x00000040
-VARIABLE_ENHANCED_AUTHENTICATED_ACCESS :: 0x00000080
+Variable_Flag :: enum u32 {
+	Non_Volatile,
+	Bootservice_Access,
+	Runtime_Access,
+	Hardware_Error_Record,
+	HR,
+	Time_Based_Authenticated_Write_Access,
+	Append_Write,
+	Enhanced_Authenticated_Access,
+}
+
+Variable_Flags :: bit_set[Variable_Flag;u32]
 
 VARIABLE_AUTHENTICATION_3_CERT_ID_SHA256 :: 1
 VARIABLE_AUTHENTICATION_3_TIMESTAMP_TYPE :: 1
@@ -271,7 +275,7 @@ Variable_Authentication_3 :: struct {
 	version:       u8,
 	type:          u8,
 	metadata_size: u32,
-	flags:         u32,
+	flags:         Variable_Flags,
 }
 
 Variable_Authentication_3_Nonce :: struct {
