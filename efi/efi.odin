@@ -285,7 +285,7 @@ Variable_Authentication_3_Nonce :: struct {
 
 OPTIONAL_PTR :: 0x0000001
 
-Reset_Type :: enum {
+Reset_Type :: enum uint {
 	Cold,
 	Warm,
 	Shutdown,

@@ -10,7 +10,6 @@ lld -flavor link \
 	-subsystem:efi_application \
 	-nodefaultlib \
 	-dll \
-	-entry:efi_main \
 	-out:hellope.efi
 
 rm ./*.obj ./hellope.lib

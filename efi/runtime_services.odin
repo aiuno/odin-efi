@@ -41,7 +41,7 @@ Reset_System :: #type proc "std" (
 	reset_status: Status,
 	data_size: uint,
 	reset_data: rawptr,
-)
+) -> !
 Get_Next_High_Monotonic_Count :: #type proc "std" (high_count: ^u32) -> Status
 Update_Capsule :: #type proc "std" (
 	capsule_header_array: ^[^]Capsule_Header,
